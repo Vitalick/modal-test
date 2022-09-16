@@ -5,12 +5,10 @@
 
       <ModalComponent title="Заголовок" :close="() => modalOpen = false" v-if="modalOpen" fullscreen>
         <ModalComponent title="Заголовок2" :close="() => modalOpen2 = false" v-if="modalOpen2">
-          <ProviderList providers-count="50" v-if="true"/>
-          <HelloWorld msg="Привет" v-if="false"/>
+          <HelloWorld msg="Привет"/>
         </ModalComponent>
 
-        <ProviderList providers-count="50" v-if="true"/>
-        <HelloWorld msg="Привет" v-if="false"/>
+        <ProviderList :providers-count="50"/>
         <template v-slot:footer>
 
           <button @click="() => modalOpen2 = true">Открыть модалку</button>
