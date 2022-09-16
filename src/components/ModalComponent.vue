@@ -1,13 +1,19 @@
 <template>
-  <div class="modal-block" :style="styleProp" :class="{'fullscreen': fullscreen}">
-    <div v-if="title" class="modal-header">{{ title }}</div>
-    <div v-if="$slots.default" class="modal-body">
-      <slot name="default"></slot>
+  <Teleport to="#app">
+    <div class="modal-block" :style="styleProp" :class="{'fullscreen': fullscreen}">
+      <div v-if="title" class="modal-header">
+        {{ title }}
+        <button @click="close">X</button>
+      </div>
+      <div v-if="$slots.default" class="modal-body">
+        <slot name="default"></slot>
+      </div>
+      <div v-if="$slots.footer" class="modal-footer">
+        <slot name="footer"/>
+      </div>
     </div>
-    <div v-if="$slots.footer" class="modal-footer">
-      <slot name="footer" />
-    </div>
-  </div>
+  </Teleport>
+
 </template>
 
 <script>
@@ -33,11 +39,12 @@ export default {
       type: String,
       default: () => "30vw",
     },
-    fullscreen: Boolean
+    fullscreen: Boolean,
+    close: Function
   },
   computed: {
     styleProp() {
-      return this.fullscreen ? {} :{
+      return this.fullscreen ? {} : {
         maxHeight: this.maxHeight,
         maxWidth: this.maxWidth,
         minHeight: this.minHeight,
@@ -55,6 +62,7 @@ export default {
 :root {
     --border-settings: black solid thin;
 }
+
 .modal-block {
     display: flex;
     flex-direction: column;
@@ -66,6 +74,7 @@ export default {
     color: black;
 
 }
+
 .modal-block.fullscreen {
     border-radius: 0;
     height: 99%;
@@ -81,9 +90,8 @@ export default {
 .modal-header {
     background: red;
     border-bottom: var(--border-settings);
+    position: relative;
 }
-
-
 .modal-footer {
     background: green;
     border-top: var(--border-settings);
